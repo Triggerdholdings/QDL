@@ -1,0 +1,9 @@
+# File: src/main.qdl
+:main
+A 0 5       # R0 = 5
+A 1 0       # R1 = 0
+L 0         # Loop start
+B 1 0       # R1 += R0
+M           # Loop end
+Q total 1   # Save R1 to memory
+H 1         # Output R1

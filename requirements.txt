@@ -1,1 +1,1 @@
-# No external dependencies yet
+# No external dependencies required for QDL runtime.
