@@ -1,0 +1,34 @@
+# === QDL Self-Hosting Compiler (v0.1) ===
+# This QDL script defines how to parse and execute QDL from within QDL (Phase 2: Self-Hosting)
+
+# Note: This bootstrap logic assumes we are running in an already-functional QDL VM
+
+:compile
+# R0 = current line index
+# R1 = total line count
+# R2 = pointer to script buffer
+# R3 = output memory address base
+A 0 0         # line index = 0
+R 1 line_count  # total lines
+A 2 1000      # script buffer base address
+A 3 2000      # bytecode output address
+
+:loop
+K 0 end_compile   # if R0 == line_count, end
+R 4 1000          # R4 = current line token (assume pre-tokenized)
+# Simplified: Copy token to output memory slot
+Q 2000 4
+B 3 1             # move output ptr forward
+B 0 1             # move to next line
+J loop
+
+:end_compile
+P
+
+# === Bootstrap Driver (external Python loader still feeds script buffer) ===
+# Once this logic is self-hosted, even the loader will be in QDL
+
+:main
+O compile        # call compiler
+# Eventually call "run" here once bytecode compiled
+H 9              # output done

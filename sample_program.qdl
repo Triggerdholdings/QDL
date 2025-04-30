@@ -1,0 +1,8 @@
+:main
+A 0 5       # R0 = 5 (counter)
+A 1 0       # R1 = 0 (accum)
+L 0         # loop R0
+B 1 0       # R1 += R0
+M           # end loop
+Q total 1   # store R1 in memory as 'total'
+H 1         # output R1
